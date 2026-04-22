@@ -1,0 +1,52 @@
+public class QuantityMeasurementApp {
+
+    static class Feet {
+        private final double value;
+
+        public Feet(double value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            Feet other = (Feet) obj;
+            return Double.compare(this.value, other.value) == 0;
+        }
+    }
+
+    private static void assertResult(boolean condition, String testName) {
+        if (condition) {
+            System.out.println(testName + ": PASSED");
+        } else {
+            System.out.println(testName + ": FAILED");
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Feet f1 = new Feet(1.0);
+        Feet f2 = new Feet(1.0);
+        assertResult(f1.equals(f2), "testEquality_SameValue");
+
+        Feet f3 = new Feet(1.0);
+        Feet f4 = new Feet(2.0);
+        assertResult(!f3.equals(f4), "testEquality_DifferentValue");
+
+        Feet f5 = new Feet(1.0);
+        assertResult(!f5.equals(null), "testEquality_NullComparison");
+
+        Feet f6 = new Feet(1.0);
+        assertResult(f6.equals(f6), "testEquality_SameReference");
+
+        Feet f7 = new Feet(1.0);
+        String nonNumeric = "abc";
+        assertResult(!f7.equals(nonNumeric), "testEquality_NonNumericInput");
+
+        Feet a = new Feet(1.0);
+        Feet b = new Feet(1.0);
+        Feet c = new Feet(1.0);
+        assertResult(a.equals(b) && b.equals(c) && a.equals(c), "testEquality_Transitive");
+    }
+}
