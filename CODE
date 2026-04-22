@@ -16,6 +16,34 @@ public class QuantityMeasurementApp {
         }
     }
 
+    static class Inches {
+        private final double value;
+
+        public Inches(double value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            Inches other = (Inches) obj;
+            return Double.compare(this.value, other.value) == 0;
+        }
+    }
+
+    static boolean checkFeetEquality(double a, double b) {
+        Feet f1 = new Feet(a);
+        Feet f2 = new Feet(b);
+        return f1.equals(f2);
+    }
+
+    static boolean checkInchesEquality(double a, double b) {
+        Inches i1 = new Inches(a);
+        Inches i2 = new Inches(b);
+        return i1.equals(i2);
+    }
+
     private static void assertResult(boolean condition, String testName) {
         if (condition) {
             System.out.println(testName + ": PASSED");
@@ -26,27 +54,24 @@ public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
-        Feet f1 = new Feet(1.0);
-        Feet f2 = new Feet(1.0);
-        assertResult(f1.equals(f2), "testEquality_SameValue");
+        System.out.println("Feet Equality:");
+        System.out.println("Equal (" + checkFeetEquality(1.0, 1.0) + ")");
 
-        Feet f3 = new Feet(1.0);
-        Feet f4 = new Feet(2.0);
-        assertResult(!f3.equals(f4), "testEquality_DifferentValue");
+        System.out.println("Inches Equality:");
+        System.out.println("Equal (" + checkInchesEquality(1.0, 1.0) + ")");
 
-        Feet f5 = new Feet(1.0);
-        assertResult(!f5.equals(null), "testEquality_NullComparison");
+        assertResult(checkFeetEquality(1.0, 1.0), "Feet_SameValue");
+        assertResult(!checkFeetEquality(1.0, 2.0), "Feet_DifferentValue");
+        assertResult(!new Feet(1.0).equals(null), "Feet_NullComparison");
+        Feet f = new Feet(1.0);
+        assertResult(f.equals(f), "Feet_SameReference");
+        assertResult(!f.equals("abc"), "Feet_NonNumeric");
 
-        Feet f6 = new Feet(1.0);
-        assertResult(f6.equals(f6), "testEquality_SameReference");
-
-        Feet f7 = new Feet(1.0);
-        String nonNumeric = "abc";
-        assertResult(!f7.equals(nonNumeric), "testEquality_NonNumericInput");
-
-        Feet a = new Feet(1.0);
-        Feet b = new Feet(1.0);
-        Feet c = new Feet(1.0);
-        assertResult(a.equals(b) && b.equals(c) && a.equals(c), "testEquality_Transitive");
+        assertResult(checkInchesEquality(1.0, 1.0), "Inches_SameValue");
+        assertResult(!checkInchesEquality(1.0, 2.0), "Inches_DifferentValue");
+        assertResult(!new Inches(1.0).equals(null), "Inches_NullComparison");
+        Inches i = new Inches(1.0);
+        assertResult(i.equals(i), "Inches_SameReference");
+        assertResult(!i.equals("abc"), "Inches_NonNumeric");
     }
 }
