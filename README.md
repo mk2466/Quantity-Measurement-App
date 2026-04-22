@@ -1,59 +1,54 @@
-# Quantity Measurement App - UC2 (Feet and Inches Equality)
+# Quantity Measurement App - UC3 (Generic Quantity Class)
 
 ## Description
-This application extends UC1 by supporting equality checks for both Feet and Inches measurements.  
-Each unit is handled independently, and comparisons are performed only within the same unit type.
+This application refactors Feet and Inches into a single generic Quantity class using the DRY principle. It supports comparison across different units by converting values into a common base unit (feet).
 
 ## Features
-- Equality check for Feet values
-- Equality check for Inches values
-- Handles null and type safety
-- Uses Double.compare for accurate floating-point comparison
-- Separate methods for Feet and Inches comparison
+- Single Quantity class for all length units
+- Supports Feet and Inches
+- Cross-unit comparison (1 ft = 12 inches)
+- Eliminates duplicate code
+- Uses enum for unit safety
 
 ## Class Structure
 - QuantityMeasurementApp
-  - Inner class: Feet
-  - Inner class: Inches
+  - enum: LengthUnit
+  - class: Quantity
 
 ## How It Works
-1. Two numeric values are passed for comparison
-2. Objects of Feet or Inches are created
-3. equals() method is used to compare values
-4. Returns true if equal, otherwise false
+1. Create Quantity objects with value and unit
+2. Convert values into base unit (feet)
+3. Compare using equals()
 
 ## Example
 Input:
-1.0 ft and 1.0 ft  
-1.0 inch and 1.0 inch  
+Quantity(1.0, FEET) and Quantity(12.0, INCH)
 
 Output:
-Equal (true)  
 Equal (true)
 
 ## Concepts Covered
-- Object equality (equals method)
+- DRY Principle
+- Enum usage
+- Object equality
 - Floating-point comparison
-- Encapsulation and immutability
-- Null safety and type checking
-- Code reuse using methods
+- Encapsulation
+- Abstraction
 
 ## Test Cases
-- Same value comparison
-- Different value comparison
-- Null comparison
-- Same reference check
-- Non-numeric comparison
+- Feet to Feet equality
+- Inch to Inch equality
+- Feet to Inch conversion equality
+- Inch to Feet conversion equality
+- Different values
+- Null handling
+- Same reference
+- Invalid unit handling
 
-## Limitations
-- Feet and Inches are handled as separate classes
-- Code duplication exists between both classes
-- Does not support cross-unit comparison (e.g., feet to inches)
-
-## Future Improvement
-- Introduce a generic Quantity class
-- Support unit conversion (feet ↔ inches)
-- Reduce code duplication (DRY principle)
+## Advantages
+- No code duplication
+- Easy to add new units
+- Centralized conversion logic
 
 ## Requirements
 - Java 8 or above
